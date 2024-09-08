@@ -5,10 +5,19 @@ import com.aidyninho.greet.model.User;
 
 public class UserService {
 
-    private final UserDao userDao;
+    private static final UserService INSTANCE = new UserService();
+    private UserDao userDao;
 
-    public UserService(UserDao userDao) {
+    private UserService() {
+        this.userDao = UserDao.getInstance();
+    }
+
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public static UserService getInstance() {
+        return INSTANCE;
     }
 
     public boolean save(User user) {

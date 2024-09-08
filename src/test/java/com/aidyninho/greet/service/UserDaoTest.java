@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserServiceTest {
 
     @Mock
-    private UserDao userDao;
+    private final UserDao userDao = UserDao.getInstance();
 
     @InjectMocks
     private UserService userService;
