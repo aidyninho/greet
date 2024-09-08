@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserServiceTest {
 
     @Mock
-    private UserDao userDao;
+    private final UserDao userDao = UserDao.getInstance();
 
     @InjectMocks
     private UserService userService;
@@ -32,7 +32,7 @@ class UserServiceTest {
     public void getByIdReturnsUser() {
         User expected = new User(1L, "John", "Doe");
         Mockito.doReturn(expected).when(userDao).getById(1L);
-        User actual = userDao.getById(1L);
+        User actual = userService.findById(1L);
         assertEquals(expected, actual);
     }
 
