@@ -23,7 +23,7 @@ public class GetAndDeleteUserServlet extends HttpServlet {
 
         user.ifPresentOrElse(user1 -> {
                     try {
-                        resp.getWriter().print(user);
+                        resp.getWriter().print(user1);
                         resp.setStatus(HttpServletResponse.SC_OK);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
