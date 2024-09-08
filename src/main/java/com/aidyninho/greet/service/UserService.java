@@ -3,6 +3,8 @@ package com.aidyninho.greet.service;
 import com.aidyninho.greet.dao.UserDao;
 import com.aidyninho.greet.model.User;
 
+import java.util.Optional;
+
 public class UserService {
 
     private static final UserService INSTANCE = new UserService();
@@ -32,7 +34,7 @@ public class UserService {
         return userDao.delete(id);
     }
 
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         return userDao.getById(id);
     }
 }

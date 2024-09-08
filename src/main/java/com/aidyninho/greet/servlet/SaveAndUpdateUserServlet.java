@@ -7,13 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
 @WebServlet("/users")
 public class SaveAndUpdateUserServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json");
         String firstname = req.getParameter("firstname");
         String lastname = req.getParameter("lastname");
@@ -31,7 +29,7 @@ public class SaveAndUpdateUserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json");
 
         Long id = Long.parseLong(req.getParameter("id"));

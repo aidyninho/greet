@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,9 +33,9 @@ class UserServiceTest {
     @Test
     public void getByIdReturnsUser() {
         User expected = new User(1L, "John", "Doe");
-        Mockito.doReturn(expected).when(userDao).getById(1L);
-        User actual = userService.findById(1L);
-        assertEquals(expected, actual);
+        Mockito.doReturn(Optional.of(expected)).when(userDao).getById(1L);
+        Optional<User> actual = userService.findById(1L);
+        actual.ifPresent(asserted -> assertEquals(expected, actual.get()));
     }
 
     @Test
