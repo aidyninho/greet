@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/users/*")
-public class GetUserServlet extends HttpServlet {
+public class GetAndDeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -20,5 +20,21 @@ public class GetUserServlet extends HttpServlet {
         UserService userService = UserService.getInstance();
         User user = userService.findById(id);
         resp.getWriter().print(user.toString());
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("application/json");
+
+        Long id = Long.parseLong(req.getPathInfo().substring(1));
+
+        UserService userService = UserService.getInstance();
+        boolean deleted = userService.delete(id);
+
+        if (deleted) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }
