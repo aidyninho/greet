@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class UserDao {
 
@@ -51,7 +52,7 @@ public class UserDao {
         }
     }
 
-    public User getById(Long id) {
+    public Optional<User> getById(Long id) {
         try (Connection connection = ConnectionManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SQL);
             preparedStatement.setLong(1, id);
@@ -64,7 +65,7 @@ public class UserDao {
                         resultSet.getString("lastname")
                 );
             }
-            return user;
+            return Optional.ofNullable(user);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
