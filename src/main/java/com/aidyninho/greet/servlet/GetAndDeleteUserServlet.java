@@ -8,22 +8,33 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/users/*")
 public class GetAndDeleteUserServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json");
         Long id = Long.parseLong(req.getPathInfo().substring(1));
 
         UserService userService = UserService.getInstance();
-        User user = userService.findById(id);
-        resp.getWriter().print(user.toString());
+        Optional<User> user = userService.findById(id);
+
+        user.ifPresentOrElse(user1 -> {
+                    try {
+                        resp.getWriter().print(user);
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }, () -> resp.setStatus(HttpServletResponse.SC_BAD_REQUEST)
+
+        );
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         resp.setContentType("application/json");
 
         Long id = Long.parseLong(req.getPathInfo().substring(1));
